@@ -13,7 +13,8 @@ to your array so you can see the display.
 const myLibrary = [];
 
 //HTML Elements
-const bookTable = document.querySelector(".bookTable");
+const bookTitles = document.querySelector(".bookTitles");
+const bookInfo = document.querySelector(".bookInfo");
 
 //Book constructor
 function Book(title, author, isbn, pages, status) {
@@ -53,22 +54,25 @@ addBookToLibrary(
   "not read yet",
 );
 
+/*
 addBookToLibrary(
   "NieR: Automata World Guide Volume 2 ",
   "Square Enix",
   "1506715753",
   "304",
   "Reading",
-);
+)*/
 
 /*
 5. Function that loops through the array and displays each book on the page.
 6. Display them in some sort of table, or each on their own “card”. It might help for now to manually add a few books 
 to your array so you can see the display.
+NOTE: Consider the logic for displaying books to the user and the book structures that hold all information as distinct entities. 
 */
 
 function displayBook(book) {
   console.log(book);
+
   //Need the book info for adding it individually to the table
   const title = book.title;
   const author = book.author;
@@ -76,10 +80,17 @@ function displayBook(book) {
   const pages = book.pages;
   const status = book.status;
 
-  /*Creating table rows with book info*/
-  let tr = document.createElement("tr");
-  tr.innerHTML = title;
-  bookTable.appendChild(tr);
+  /*Creating table rows with book title*/
+  let th = document.createElement("th");
+  th.innerHTML = title;
+  bookTitles.appendChild(th);
+
+  /*Creating table cells with book info*/
+  let td = document.createElement("td");
+  td.innerHTML = `Author: ${author}, ISBN: ${isbn}, Pages: ${pages}, Status: ${status}`;
+  bookInfo.appendChild(td);
+
+  /* Next step will be distributing table created by template */
 }
 
 myLibrary.forEach(displayBook);

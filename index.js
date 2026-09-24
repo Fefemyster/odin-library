@@ -5,9 +5,15 @@ Steps:
 3. Function that can take some arguments, create a book from those arguments, 
 and store the new book object into an array. - Done
 4. Each book needs to have an unique id - Done
+5. Function that loops through the array and displays each book on the page. 
+You can display them in some sort of table, or each on their own “card”. It might help for now to manually add a few books 
+to your array so you can see the display.
 */
 
 const myLibrary = [];
+
+//HTML Elements
+const bookTable = document.querySelector(".bookTable");
 
 //Book constructor
 function Book(title, author, isbn, pages, status) {
@@ -34,7 +40,6 @@ function Book(title, author, isbn, pages, status) {
 function addBookToLibrary(title, author, isbn, pages, status) {
   //1. Create the book
   const book = new Book(title, author, isbn, pages, status);
-  console.log(book);
 
   //2. Store book on library array
   myLibrary.push(book);
@@ -47,3 +52,34 @@ addBookToLibrary(
   "295",
   "not read yet",
 );
+
+addBookToLibrary(
+  "NieR: Automata World Guide Volume 2 ",
+  "Square Enix",
+  "1506715753",
+  "304",
+  "Reading",
+);
+
+/*
+5. Function that loops through the array and displays each book on the page.
+6. Display them in some sort of table, or each on their own “card”. It might help for now to manually add a few books 
+to your array so you can see the display.
+*/
+
+function displayBook(book) {
+  console.log(book);
+  //Need the book info for adding it individually to the table
+  const title = book.title;
+  const author = book.author;
+  const isbn = book.isbn;
+  const pages = book.pages;
+  const status = book.status;
+
+  /*Creating table rows with book info*/
+  let tr = document.createElement("tr");
+  tr.innerHTML = title;
+  bookTable.appendChild(tr);
+}
+
+myLibrary.forEach(displayBook);

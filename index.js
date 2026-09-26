@@ -13,8 +13,8 @@ to your array so you can see the display.
 const myLibrary = [];
 
 //HTML Elements
-const bookTitles = document.querySelector(".bookTitles");
-const bookInfo = document.querySelector(".bookInfo");
+const tableCell = document.querySelector(".tableCell");
+const tableInfo = document.querySelector(".tableInfo");
 
 //Book constructor
 function Book(title, author, isbn, pages, status) {
@@ -64,15 +64,22 @@ NOTE: Consider the logic for displaying books to the user and the book structure
 function displayBook(book) {
   console.log(book);
 
+  //Creating table
   const table = document.createElement("table");
-  table;
+  const div = document.createElement("div");
+  const tr = document.createElement("tr");
+  const tr2 = document.createElement("tr");
+  document.body.appendChild(div);
+  div.appendChild(table);
+  table.appendChild(tr);
+  table.appendChild(tr2);
 
   const rowHeaders = ["Title", "Author", "ISBN", "Pages", "Status"];
 
   rowHeaders.forEach((headerText) => {
     const th = document.createElement("th");
     th.textContent = headerText;
-    bookTitles.appendChild(th);
+    tr.appendChild(th);
   });
 
   const rowContent = [
@@ -86,11 +93,11 @@ function displayBook(book) {
   rowContent.forEach((rowContent) => {
     const td = document.createElement("td");
     td.textContent = rowContent;
-    bookInfo.appendChild(td);
+    tr2.appendChild(td);
   });
 
   //An individual table needs to be created per book - Done
-  //Need to create table with Javascript
+  //Need to create table with Javascript - Done
 }
 
 myLibrary.forEach(displayBook);

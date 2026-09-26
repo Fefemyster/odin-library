@@ -28,14 +28,6 @@ function Book(title, author, isbn, pages, status) {
   this.pages = pages;
   this.status = status;
   this.id = crypto.randomUUID();
-
-  /*
-  this.info = function () {
-    console.log(
-      `${this.title} by ${this.author}, ISBN: ${this.isbn}, ${this.pages} pages, ${this.status}`,
-    );
-  };
-  */
 }
 
 function addBookToLibrary(title, author, isbn, pages, status) {
@@ -54,14 +46,13 @@ addBookToLibrary(
   "not read yet",
 );
 
-/*
 addBookToLibrary(
   "NieR: Automata World Guide Volume 2 ",
   "Square Enix",
   "1506715753",
   "304",
   "Reading",
-)*/
+);
 
 /*
 5. Function that loops through the array and displays each book on the page.
@@ -73,24 +64,33 @@ NOTE: Consider the logic for displaying books to the user and the book structure
 function displayBook(book) {
   console.log(book);
 
-  //Need the book info for adding it individually to the table
-  const title = book.title;
-  const author = book.author;
-  const isbn = book.isbn;
-  const pages = book.pages;
-  const status = book.status;
+  const table = document.createElement("table");
+  table;
 
-  /*Creating table rows with book title*/
-  let th = document.createElement("th");
-  th.innerHTML = title;
-  bookTitles.appendChild(th);
+  const rowHeaders = ["Title", "Author", "ISBN", "Pages", "Status"];
 
-  /*Creating table cells with book info*/
-  let td = document.createElement("td");
-  td.innerHTML = `Author: ${author}, ISBN: ${isbn}, Pages: ${pages}, Status: ${status}`;
-  bookInfo.appendChild(td);
+  rowHeaders.forEach((headerText) => {
+    const th = document.createElement("th");
+    th.textContent = headerText;
+    bookTitles.appendChild(th);
+  });
 
-  /* Next step will be distributing table created by template */
+  const rowContent = [
+    book.title,
+    book.author,
+    book.isbn,
+    book.pages,
+    book.status,
+  ];
+
+  rowContent.forEach((rowContent) => {
+    const td = document.createElement("td");
+    td.textContent = rowContent;
+    bookInfo.appendChild(td);
+  });
+
+  //An individual table needs to be created per book - Done
+  //Need to create table with Javascript
 }
 
 myLibrary.forEach(displayBook);

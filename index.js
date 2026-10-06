@@ -36,8 +36,12 @@ function addBookToLibrary(title, author, isbn, pages, status) {
 
   //2. Store book on library array
   myLibrary.push(book);
+
+  //3. Display Book
+  displayBook(book);
 }
 
+/*
 addBookToLibrary(
   "The Lord of the Rings",
   "J.R.R Tolkien",
@@ -52,7 +56,7 @@ addBookToLibrary(
   "1506715753",
   "304",
   "Reading",
-);
+)*/
 
 /*
 5. Function that loops through the array and displays each book on the page.
@@ -61,9 +65,36 @@ to your array so you can see the display.
 NOTE: Consider the logic for displaying books to the user and the book structures that hold all information as distinct entities. 
 */
 
-function displayBook(book) {
-  console.log(book);
+//Next step: Gather the info from the form, research FormData for this
 
+const formEl = document.querySelector("#myForm"); //1st. Select form
+
+formEl.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.target); // 2nd. Getting form data using JS FormData method
+
+  //2 ways of getting info
+  //1. Individually
+
+  const title = formData.get("title"); //Using name from form field
+  const author = formData.get("author");
+  const isbn = formData.get("isbn");
+  const pages = formData.get("pages");
+  const status = formData.get("status");
+
+  //2. All of them
+  const allValues = Object.fromEntries(formData.entries()); // Take key value pairs and transform them into an object
+  //NOTE: formData constructor provides a .entries() method
+  console.log(allValues);
+
+  //3. Need to create a book with the form data and added it to library
+
+  addBookToLibrary(title, author, isbn, pages, status);
+  console.log(myLibrary);
+});
+
+function displayBook(book) {
   //Creating table
   const table = document.createElement("table");
   const div = document.createElement("div");
@@ -74,7 +105,7 @@ function displayBook(book) {
   table.appendChild(tr);
   table.appendChild(tr2);
 
-  const rowHeaders = ["Title", "Author", "ISBN", "Pages", "Status"];
+  const rowHeaders = ["Title", "Author", "ISBN", "Pages", "Status", "ID"];
 
   rowHeaders.forEach((headerText) => {
     const th = document.createElement("th");
@@ -88,6 +119,7 @@ function displayBook(book) {
     book.isbn,
     book.pages,
     book.status,
+    book.id,
   ];
 
   rowContent.forEach((rowContent) => {
@@ -99,5 +131,3 @@ function displayBook(book) {
   //An individual table needs to be created per book - Done
   //Need to create table with Javascript - Done
 }
-
-myLibrary.forEach(displayBook);

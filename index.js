@@ -92,6 +92,7 @@ formEl.addEventListener("submit", (e) => {
 
   addBookToLibrary(title, author, isbn, pages, status);
   console.log(myLibrary);
+  formEl.reset();
 });
 
 function displayBook(book) {
@@ -100,10 +101,20 @@ function displayBook(book) {
   const div = document.createElement("div");
   const tr = document.createElement("tr");
   const tr2 = document.createElement("tr");
+  const deleteButton = document.createElement("button");
+
+  //Assigning dataset to each individual table / Associate DOM element with the book
+  table.dataset.id = book.id;
+
+  //When creating table element, it wil look like this: <table data-id = "id generated above" >
+
+  deleteButton.textContent = "Remove Book !";
+
   document.body.appendChild(div);
   div.appendChild(table);
   table.appendChild(tr);
   table.appendChild(tr2);
+  table.appendChild(deleteButton);
 
   const rowHeaders = ["Title", "Author", "ISBN", "Pages", "Status", "ID"];
 
@@ -128,6 +139,16 @@ function displayBook(book) {
     tr2.appendChild(td);
   });
 
-  //An individual table needs to be created per book - Done
-  //Need to create table with Javascript - Done
+  deleteButton.addEventListener("click", () => {
+    //1. To find book you need its index, and for getting its index you need the book id
+
+    const bookId = table.dataset.id;
+
+    const bookIndex = myLibrary.findIndex((book) => book.id === bookId);
+
+    myLibrary.splice(bookIndex, 1);
+
+    table.remove();
+    console.log(myLibrary);
+  });
 }

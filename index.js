@@ -1,16 +1,5 @@
-/* 
-Steps: 
-1. Array for a library for storing books - Done
-2. Book Constructor - Done
-3. Function that can take some arguments, create a book from those arguments, 
-and store the new book object into an array. - Done
-4. Each book needs to have an unique id - Done
-5. Function that loops through the array and displays each book on the page. 
-You can display them in some sort of table, or each on their own “card”. It might help for now to manually add a few books 
-to your array so you can see the display.
-*/
-
 const myLibrary = [];
+let isRead = false; //Book status
 
 //HTML Elements
 const tableCell = document.querySelector(".tableCell");
@@ -41,32 +30,6 @@ function addBookToLibrary(title, author, isbn, pages, status) {
   displayBook(book);
 }
 
-/*
-addBookToLibrary(
-  "The Lord of the Rings",
-  "J.R.R Tolkien",
-  "9780395647387",
-  "295",
-  "not read yet",
-);
-
-addBookToLibrary(
-  "NieR: Automata World Guide Volume 2 ",
-  "Square Enix",
-  "1506715753",
-  "304",
-  "Reading",
-)*/
-
-/*
-5. Function that loops through the array and displays each book on the page.
-6. Display them in some sort of table, or each on their own “card”. It might help for now to manually add a few books 
-to your array so you can see the display.
-NOTE: Consider the logic for displaying books to the user and the book structures that hold all information as distinct entities. 
-*/
-
-//Next step: Gather the info from the form, research FormData for this
-
 const formEl = document.querySelector("#myForm"); //1st. Select form
 
 formEl.addEventListener("submit", (e) => {
@@ -86,12 +49,10 @@ formEl.addEventListener("submit", (e) => {
   //2. All of them
   const allValues = Object.fromEntries(formData.entries()); // Take key value pairs and transform them into an object
   //NOTE: formData constructor provides a .entries() method
-  console.log(allValues);
 
   //3. Need to create a book with the form data and added it to library
 
   addBookToLibrary(title, author, isbn, pages, status);
-  console.log(myLibrary);
   formEl.reset();
 });
 
@@ -102,19 +63,21 @@ function displayBook(book) {
   const tr = document.createElement("tr");
   const tr2 = document.createElement("tr");
   const deleteButton = document.createElement("button");
+  const updateStatus = document.createElement("button");
 
   //Assigning dataset to each individual table / Associate DOM element with the book
+  //When creating table element, it wil look like this: <table data-id = "id generated above" >
   table.dataset.id = book.id;
 
-  //When creating table element, it wil look like this: <table data-id = "id generated above" >
-
-  deleteButton.textContent = "Remove Book !";
+  deleteButton.textContent = "Remove Book!";
+  updateStatus.textContent = "Update Book Status!";
 
   document.body.appendChild(div);
   div.appendChild(table);
   table.appendChild(tr);
   table.appendChild(tr2);
   table.appendChild(deleteButton);
+  table.appendChild(updateStatus);
 
   const rowHeaders = ["Title", "Author", "ISBN", "Pages", "Status", "ID"];
 
@@ -140,8 +103,6 @@ function displayBook(book) {
   });
 
   deleteButton.addEventListener("click", () => {
-    //1. To find book you need its index, and for getting its index you need the book id
-
     const bookId = table.dataset.id;
 
     const bookIndex = myLibrary.findIndex((book) => book.id === bookId);
@@ -151,4 +112,26 @@ function displayBook(book) {
     table.remove();
     console.log(myLibrary);
   });
+
+  updateStatus.addEventListener("click", () => {
+    book.updateStatus();
+  });
 }
+
+Book.prototype.updateStatus = function () {
+  if (this.status === "Reading") {
+    this.status = "Not Read";
+    console.log(myLibrary);
+  } else {
+    this.status = "Reading";
+    console.log(myLibrary);
+  }
+};
+
+//Updating book status
+
+//6. Add a button on each book’s display to change its read status.
+//To facilitate this you will want to create Book prototype
+// function that toggles a book instance’s read status.
+
+//6.1 Create Book Prototype function

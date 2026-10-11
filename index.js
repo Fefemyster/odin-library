@@ -96,9 +96,15 @@ function displayBook(book) {
     book.id,
   ];
 
-  rowContent.forEach((rowContent) => {
+  rowContent.forEach((rowContent, index) => {
     const td = document.createElement("td");
     td.textContent = rowContent;
+
+    //Adding a class to status cell
+    if (index === 4) {
+      td.classList.add("status-cell");
+    }
+
     tr2.appendChild(td);
   });
 
@@ -115,12 +121,16 @@ function displayBook(book) {
 
   updateStatus.addEventListener("click", () => {
     book.updateStatus();
+
+    const statusCell = tr2.querySelector(".status-cell");
+    statusCell.textContent = book.status;
   });
 }
 
 Book.prototype.updateStatus = function () {
   if (this.status === "Reading") {
     this.status = "Not Read";
+
     console.log(myLibrary);
   } else {
     this.status = "Reading";

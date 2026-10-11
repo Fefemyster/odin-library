@@ -1,9 +1,4 @@
 const myLibrary = [];
-let isRead = false; //Book status
-
-//HTML Elements
-const tableCell = document.querySelector(".tableCell");
-const tableInfo = document.querySelector(".tableInfo");
 
 //Book constructor
 function Book(title, author, isbn, pages, status) {
@@ -37,7 +32,7 @@ formEl.addEventListener("submit", (e) => {
 
   const formData = new FormData(e.target); // 2nd. Getting form data using JS FormData method
 
-  //2 ways of getting info
+  //Two ways of getting info
   //1. Individually
 
   const title = formData.get("title"); //Using name from form field
@@ -46,11 +41,11 @@ formEl.addEventListener("submit", (e) => {
   const pages = formData.get("pages");
   const status = formData.get("status");
 
+  /*
   //2. All of them
   const allValues = Object.fromEntries(formData.entries()); // Take key value pairs and transform them into an object
   //NOTE: formData constructor provides a .entries() method
-
-  //3. Need to create a book with the form data and added it to library
+ */
 
   addBookToLibrary(title, author, isbn, pages, status);
   formEl.reset();
@@ -110,13 +105,9 @@ function displayBook(book) {
 
   deleteButton.addEventListener("click", () => {
     const bookId = table.dataset.id;
-
     const bookIndex = myLibrary.findIndex((book) => book.id === bookId);
-
     myLibrary.splice(bookIndex, 1);
-
     table.remove();
-    console.log(myLibrary);
   });
 
   updateStatus.addEventListener("click", () => {
@@ -130,18 +121,7 @@ function displayBook(book) {
 Book.prototype.updateStatus = function () {
   if (this.status === "Reading") {
     this.status = "Not Read";
-
-    console.log(myLibrary);
   } else {
     this.status = "Reading";
-    console.log(myLibrary);
   }
 };
-
-//Updating book status
-
-//6. Add a button on each book’s display to change its read status.
-//To facilitate this you will want to create Book prototype
-// function that toggles a book instance’s read status.
-
-//6.1 Create Book Prototype function
